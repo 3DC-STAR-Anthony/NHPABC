@@ -17,3 +17,12 @@ result <- getAllAgeGroupsCountsAndMeta(
     save_path = "~/01.Project/NHPABC/Figure5/01.CellChat_data/",
     prefix = "PFC"
 )
+```
+# Creat CellChat object
+```r
+cellchat <- BuildAgegroupCellChatFromCountAndMeta(
+  base_path = "~/01.Project/NHPABC/Figure5/01.CellChat_data/",
+  prefix = "PFC",
+  save_path = "~/01.Project/NHPABC/Figure5/02.CellChat_objects/"
+)
+```
