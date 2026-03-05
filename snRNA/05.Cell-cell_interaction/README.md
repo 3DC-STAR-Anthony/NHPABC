@@ -52,3 +52,4 @@ Before running the script, make sure to install the following environment and R 
 - R version 4.4.1 (2024-06-14)
 - Seurat_5.3.0
 - CellChat_2.1.2
+
