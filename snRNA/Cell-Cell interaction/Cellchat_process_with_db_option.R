@@ -1,65 +1,69 @@
+# Load CellChat library
 #library(CellChat)
 
-# 内置自定义数据库路径
-custom_lr_path <- "/hwfssz3/PS_JLU/laiguangyao/02.Database/01.Construct_LR_database/04.CellChat_v2/interaction_input_CellChatDB_update_20250909_LGY_modfiy_V1.csv"
-custom_gene_path <- "/hwfssz3/PS_JLU/laiguangyao/02.Database/01.Construct_LR_database/04.CellChat_v2/geneInfo_input_CellChatDB_update_20250911_LGY_modfiy_V1.csv"
+# Built-in path for custom database files
+custom_lr_path <- "~/interaction_input_CellChatDB_update_20250909_LGY_modfiy_V1.csv"
+custom_gene_path <- "~/geneInfo_input_CellChatDB_update_20250911_LGY_modfiy_V1.csv"
 
-# 处理CellChat对象的核心函数
+# Core function to process CellChat object
 process_cellchat <- function(input_cellchat_path, output_path, use_custom_db = TRUE) {
-    # 加载CellChat对象
+    # Load CellChat object from RDS file
     cellchat <- readRDS(input_cellchat_path)
     
-    # 初始化数据库
+    # Initialize default CellChat database
     CellChatDB <- CellChatDB.human
     
-    # 根据参数选择数据库
+    # Select database based on parameter
     if (use_custom_db) {
-        # 加载自定义数据库
-        # 内置自定义数据库路径
+        # Load custom ligand-receptor and gene information database
+        # Built-in path for custom database files
         options(stringsAsFactors = FALSE)
         CellChatDB$interaction <- read.csv(custom_lr_path, row.names = 1)
         CellChatDB$geneInfo <- read.csv(custom_gene_path, row.names = 1)
-        message("使用自定义数据库")
+        message("Using custom database")
     } else {
-        message("使用原始CellChatDB数据库")
+        message("Using original CellChatDB database")
     }
     cellchat@DB <- CellChatDB
     
-    # 运行分析流程
-    cellchat <- subsetData(cellchat) # subset the expression data of signaling genes for saving computation cost
-    #cellchat <- identifyOverExpressedGenes(cellchat)
+    # Run CellChat analysis pipeline
+    source("~/identifyOverExpressedGenes_chenge.R")
+    cellchat <- subsetData(cellchat) # Subset the expression data of signaling genes to save computation cost
     cellchat <- identifyOverExpressedGenes_chenge(cellchat,thresh.p = 1)
     cellchat <- identifyOverExpressedInteractions(cellchat)
-    #cellchat <- projectData(cellchat, PPI.human)
-    #cellchat <- computeCommunProb(cellchat, raw.use = TRUE,type = "triMean",trim = 0.1)
-    cellchat <- computeCommunProb(cellchat, raw.use = TRUE,type = "truncatedMean",trim = 0)#10% ½Ø¶ÏµÄÆ½¾ùÖµ
-    cellchat <- filterCommunication(cellchat, min.cells = 0)#filter out cell number less then 100
+    cellchat <- computeCommunProb(cellchat, raw.use = TRUE,type = "truncatedMean",trim = 0)#10% trimming 
+    cellchat <- filterCommunication(cellchat, min.cells = 0)#Filter out cell groups with fewer than 100 cells
     cellchat <- computeCommunProbPathway(cellchat)
     cellchat <- aggregateNet(cellchat)
     
-    # 保存结果
+    # Save processed CellChat object
     saveRDS(cellchat, output_path)
-    message("已保存至: ", output_path)
+    message("Saved to: ", output_path)
     return(cellchat)
 }
 
-# 批量处理所有年龄组
+# Batch process all age groups
 batch_process <- function(input_dir, output_dir, prefix, use_custom_db = TRUE) {
     age_groups <- c("Old", "Exceptionally old", "Middle age", "Young")
+    # Create output directory if it doesn't exist
     if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
     
+    # Process each age group sequentially
     lapply(age_groups, function(group) {
+        # Sanitize group name (replace spaces with underscores) for file naming
         sanitized <- gsub(" ", "_", group)
         input_path <- file.path(input_dir, paste0(prefix, "_", sanitized, "_cellchat.rds"))
+        # Add database type suffix to output filename
         db_suffix <- ifelse(use_custom_db, "customDB", "originalDB")
         output_path <- file.path(output_dir, paste0(prefix, "_", sanitized, "_", db_suffix, "_processed.rds"))
         
+        # Process current age group
         process_cellchat(input_path, output_path, use_custom_db)
     })
 }
 
-# 使用示例
-# 1. 使用自定义数据库（默认）
+# Usage examples
+# 1. Use custom database (default)
 #batch_process(
 #    input_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/02.CellChat_objects/",
 #    output_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
@@ -67,30 +71,10 @@ batch_process <- function(input_dir, output_dir, prefix, use_custom_db = TRUE) {
 #    use_custom_db = TRUE
 #)
 
-# 2. 使用原始数据库
+# 2. Use original CellChatDB database
 # batch_process(
 #     input_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/02.CellChat_objects/",
 #     output_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
 #     prefix = "PFC",
 #     use_custom_db = FALSE
 # )
-
-CellChatDB <- CellChatDB.human
-#interaction_input <- read.csv("/mnt/11/monkey_aging_brain/figure4/09.Aging_related_CellChat/01.Built_LR_database/Merge_CellChat_neuronChat_interactionDB.csv",row.names = 1)
-#interaction_input <- read.csv("/hwfssz3/PS_JLU/laiguangyao/02.Database/01.Construct_LR_database/01.LR_pair_database/ALL_Tech_LRDB_Deduplication_final.csv",row.names = 1)
-#geneIfo <- read.csv("/hwfssz3/PS_JLU/laiguangyao/02.Database/01.Construct_LR_database/03.Other_Version/geneInfo_input_CellChatDB_update.csv",row.names = 1)
-#CellChatDB$interaction <- interaction_input
-#CellChatDB$geneInfo <- geneIfo
-#cellchat@DB <- CellChatDB
-#cellchat <- subsetData(cellchat) # subset the expression data of signaling genes for saving computation cost
-#cellchat <- identifyOverExpressedGenes(cellchat)
-#source("/hwfssz1/CS_CELL/cs_cell/laiguangyao/script/01.snRNA/Cell-cell_interaction/CellChat/identifyOverExpressedGenes_chenge.R")
-#cellchat <- identifyOverExpressedGenes_chenge(cellchat)
-#cellchat <- identifyOverExpressedGenes_chenge(cellchat,thresh.p = 1)
-#cellchat <- identifyOverExpressedInteractions(cellchat)
-#cellchat <- projectData(cellchat, PPI.human)
-#cellchat <- computeCommunProb(cellchat, raw.use = TRUE, type = "triMean", trim = 0.25) ##
-#cellchat <- computeCommunProb(cellchat, raw.use = TRUE,type = "truncatedMean",trim = 0)#10% ½Ø¶ÏµÄÆ½¾ùÖµ
-#cellchat <- filterCommunication(cellchat, min.cells = 10) #filter out cell number less then 100
-#cellchat <- computeCommunProbPathway(cellchat)
-    
