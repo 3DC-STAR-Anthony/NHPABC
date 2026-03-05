@@ -10,7 +10,7 @@ This project performs cell-cell interaction analysis on single-nuclei RNA-seq da
     - Age group (e.g., `Young`)
 - How to Get Assay and Meta
 ```r
-source("~/getAllAgeGroupsCountsAndMeta.R")
+source("~/GetAllAgeGroupsCountsAndMeta.R")
 result <- getAllAgeGroupsCountsAndMeta(
     obj = rds, 
     cluster = "subtype", 
@@ -40,7 +40,7 @@ batch_process(
 ```
 # Extract LR table from CellChat result
 ```r
-source("~/extract_cellchat_communication.R")
+source("~/Extract_cellchat_communication.R")
 extract_cellchat_communication(work_dir = "~/01.Project/NHPABC/Figure5/03.Processed_CellChat_prob_truncatedMean/02.result/")
 ```
 # Get Aging-related ligand and receptor
