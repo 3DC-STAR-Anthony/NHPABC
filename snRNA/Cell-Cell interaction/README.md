@@ -6,8 +6,8 @@ This project performs cell-cell interaction analysis on single-nuclei RNA-seq da
 - The object must contain:
   - RNA assay
   - Metadata columns including:
-    - Annotion (`Subtype`)
-    - Age_group (`Young`)
+    - Annotion (e.g., `Subtype`)
+    - Age group (e.g., `Young`)
 - How to Get Assay and Meta
 ```r
 result <- getAllAgeGroupsCountsAndMeta(
@@ -20,6 +20,7 @@ result <- getAllAgeGroupsCountsAndMeta(
 ```
 # Creat CellChat object
 ```r
+source("~/BuildAgegroupCellChatFromCountAndMeta.R")
 cellchat <- BuildAgegroupCellChatFromCountAndMeta(
   base_path = "~/01.Project/NHPABC/Figure5/01.CellChat_data/",
   prefix = "PFC",
@@ -28,6 +29,7 @@ cellchat <- BuildAgegroupCellChatFromCountAndMeta(
 ```
 # CellChat Standard Process
 ```r
+source("~/Cellchat_process_with_db_option.R")
 batch_process(
     input_dir = "~/01.Project/NHPABC/Figure5/02.CellChat_objects/",
     output_dir = "~/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
