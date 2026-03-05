@@ -38,6 +38,11 @@ batch_process(
     use_custom_db = TRUE
 )
 ```
+# Extract LR table from CellChat result
+```r
+source("~/extract_cellchat_communication.R")
+extract_cellchat_communication(work_dir = "~/01.Project/NHPABC/Figure5/03.Processed_CellChat_prob_truncatedMean/02.result/")
+```
 # Get Aging-related ligand and receptor
 Inter-cluster communication probabilities were computed via the computeCommunProb function (truncatedMean = 0) at each age stage. Interaction pairs with mean communication probability > 0.002 or P-value ≥ 0.05 were filtered out. An interaction was considered aging-relevant if either its ligand or receptor was included in the DEG list.
 
