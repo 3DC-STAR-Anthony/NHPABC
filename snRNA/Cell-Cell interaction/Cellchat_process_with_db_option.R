@@ -65,16 +65,16 @@ batch_process <- function(input_dir, output_dir, prefix, use_custom_db = TRUE) {
 # Usage examples
 # 1. Use custom database (default)
 #batch_process(
-#    input_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/02.CellChat_objects/",
-#    output_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
+#    input_dir = "~/01.Project/NHPABC/Figure5/02.CellChat_objects/",
+#    output_dir = "~/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
 #    prefix = "PFC",
 #    use_custom_db = TRUE
 #)
 
 # 2. Use original CellChatDB database
 # batch_process(
-#     input_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/02.CellChat_objects/",
-#     output_dir = "/hwfssz3/PS_JLU/laiguangyao/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
+#     input_dir = "~/01.Project/NHPABC/Figure5/02.CellChat_objects/",
+#     output_dir = "~/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
 #     prefix = "PFC",
 #     use_custom_db = FALSE
 # )
