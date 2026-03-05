@@ -26,3 +26,12 @@ cellchat <- BuildAgegroupCellChatFromCountAndMeta(
   save_path = "~/01.Project/NHPABC/Figure5/02.CellChat_objects/"
 )
 ```
+# CellChat Standard Process
+```r
+batch_process(
+    input_dir = "~/01.Project/NHPABC/Figure5/02.CellChat_objects/",
+    output_dir = "~/01.Project/NHPABC/Figure5/03.Processed_CellChat/",
+    prefix = "PFC",
+    use_custom_db = TRUE
+)
+```
