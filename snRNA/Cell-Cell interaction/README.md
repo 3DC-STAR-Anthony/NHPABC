@@ -46,7 +46,7 @@ extract_cellchat_communication(work_dir = "~/01.Project/NHPABC/Figure5/03.Proces
 # Get Aging-related ligand and receptor
 Inter-cluster communication probabilities were computed via the computeCommunProb function (truncatedMean = 0) at each age stage. Interaction pairs with mean communication probability > 0.002 or P-value ≥ 0.05 were filtered out. An interaction was considered aging-relevant if either its ligand or receptor was included in the DEG list.
 
-Detail process please check: [`03.NHPABC_CellChat_ARLR_truncatedMean.ipynb`](snRNA/Cell-Cell interaction/03.NHPABC_CellChat_ARLR_truncatedMean.ipynb)
+Detail process please check: [`03.NHPABC_CellChat_ARLR_truncatedMean.ipynb`](https://github.com/3DC-STAR-Anthony/NHPABC/blob/main/snRNA/Cell-Cell%20interaction/03.NHPABC_CellChat_ARLR_truncatedMean.ipynb)
 # Dependencies
 Before running the script, make sure to install the following environment and R packages:
 - R version 4.4.1 (2024-06-14)
