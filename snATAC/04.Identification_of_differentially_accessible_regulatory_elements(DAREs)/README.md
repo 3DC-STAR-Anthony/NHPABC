@@ -24,7 +24,13 @@ process_coefficient(
 ```
 ## Step 3: Filter by corrlation and coefficient
 ```r
-
+source("~/Filter_correlation_with_coefficient.R")
+filter_correlation_with_coefficient(
+  subtype_name = "Ast1_PFC",
+  cor_rds_path = "",
+  coeff_rds_path = "",
+  output_dir = "~/output"
+)
 ```
 # sDAREs
 Use the normalization.method function in Seurat to generate a Peak × Cell CPM (Counts Per Million) matrix for each cell type.
