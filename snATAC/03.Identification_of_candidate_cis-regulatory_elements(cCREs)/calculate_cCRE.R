@@ -53,7 +53,7 @@ calculate_cCRE <- function(rds_path,
     df[[sample]] <- sample_mean_cpm
   }
 
-  # Save intermediate mean CPM matrix, and use in DAREs calculation
+  # Save intermediate mean CPM matrix
   saveRDS(df, file.path(output_dir, paste0(cell_type, "_cCRE_row.rds")))
 
   # Apply filtering criteria
