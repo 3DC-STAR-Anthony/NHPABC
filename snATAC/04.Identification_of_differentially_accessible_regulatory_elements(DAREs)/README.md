@@ -2,7 +2,7 @@
 This project performs progressive/stage-specific/longevity-associated differentially accessible regulatory elements (pDAREs/sDAREs/longDAREs) analysis on single-nuclei ATAC-seq data. 
 # pDAREs
 ## Input
-- An ArchR PeakMatrix object in `.rds` format named: `<Subtype>.rds` (e.g., `Ast1_PFC_PeakMatrix.rds`)
+- An mean_CPM matrix object in [`_cCRE_row.rds`] format named: `<Subtype>_cCRE_row.rds` (e.g., `Ast1_PFC_cCRE_row.rds`)
 - Use the function of ArchR [`getMatrixFromProject`](https://www.archrproject.com/reference/getMatrixFromProject.html)
 - The object must contain:
   - peakmatrix (peaks X Individuals)
