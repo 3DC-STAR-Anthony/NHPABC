@@ -16,10 +16,10 @@ Process_subtype_cpm_cor(
 ```
 ## Step 2:
 ```r
-source("")
+source("~/Process_coefficient.R")
 result <- process_coefficient_from_rds(
-  input_rds = "/path/to/your/subtype_matrix.rds",
-  output_dir = "/path/to/output/directory"
+  input_rds = "~/Ast1_PFC_cCRE.rds",
+  output_dir = "~/output"
 )
 ```
 # sDAREs
