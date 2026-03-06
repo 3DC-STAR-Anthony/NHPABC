@@ -14,13 +14,17 @@ Process_subtype_cpm_cor(
   mc_cores = 140
 )
 ```
-## Step 2:
+## Step 2: Calculate the coefficient across age
 ```r
 source("~/Process_coefficient.R")
 process_coefficient(
   input_rds = "~/Ast1_PFC_cCRE.rds",
   output_dir = "~/output"
 )
+```
+## Step 3: Filter by corrlation and coefficient
+```r
+
 ```
 # sDAREs
 Use the normalization.method function in Seurat to generate a Peak × Cell CPM (Counts Per Million) matrix for each cell type.
