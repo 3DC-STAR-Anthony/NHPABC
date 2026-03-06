@@ -8,7 +8,7 @@ This project performs progressive/stage-specific/longevity-associated differenti
 ## Step 1: Calculate the corrlation across age
 ```r
 source("~/Process_subtype_cpm_cor.R")
-Process_subtype_cpm_cor(
+cor <- Process_subtype_cpm_cor(
   input_rds = "~/Ast1_PFC_cCRE.rds",
   output_dir = "~/output",
   mc_cores = 140
@@ -17,7 +17,7 @@ Process_subtype_cpm_cor(
 ## Step 2: Calculate the coefficient across age
 ```r
 source("~/Process_coefficient.R")
-process_coefficient(
+coef <- process_coefficient(
   input_rds = "~/Ast1_PFC_cCRE.rds",
   output_dir = "~/output"
 )
@@ -27,8 +27,8 @@ process_coefficient(
 source("~/Filter_correlation_with_coefficient.R")
 filter_correlation_with_coefficient(
   subtype_name = "Ast1_PFC",
-  cor_rds_path = "",
-  coeff_rds_path = "",
+  cor_rds_path = cor,
+  coeff_rds_path = coef,
   output_dir = "~/output"
 )
 ```
