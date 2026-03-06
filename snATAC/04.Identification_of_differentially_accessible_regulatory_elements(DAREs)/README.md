@@ -2,10 +2,10 @@
 This project performs progressive/stage-specific/longevity-associated differentially accessible regulatory elements (pDAREs/sDAREs/longDAREs) analysis on single-nuclei ATAC-seq data. 
 # pDAREs
 ## Input
-- An mean_CPM matrix object in [`_cCRE_row.rds`](https://github.com/3DC-STAR-Anthony/NHPABC/blob/main/snATAC/03.Identification_of_candidate_cis-regulatory_elements(cCREs)/calculate_cCRE.R) format named: `<Subtype>_cCRE_row.rds` (e.g., `Ast1_PFC_cCRE_row.rds`)
+- An mean_CPM matrix object in [`_cCRE.rds`](https://github.com/3DC-STAR-Anthony/NHPABC/blob/main/snATAC/03.Identification_of_candidate_cis-regulatory_elements(cCREs)/calculate_cCRE.R) format named: `<Subtype>_cCRE_row.rds` (e.g., `Ast1_PFC_cCRE.rds`)
 - The object must contain:
   - mean_CPM matrix (peaks X Individuals)
-## Step 1:
+## Step 1: Calculate the corrlation across age
 
 
 # sDAREs
