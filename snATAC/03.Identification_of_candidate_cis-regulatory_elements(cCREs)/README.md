@@ -22,7 +22,7 @@ saveRDS(rds, paste0("Ast1_PFC_peakmatrix_seurat.rds"))
 ```r
 source("~/calculate_cCRE.R")
 cCRE <- calculate_cCRE(
-  rds_path = "./MyCellType_peakmatrix_seurat.rds",
+  rds_path = "./Ast1_PFC_peakmatrix_seurat.rds",
   output_dir = "./cCRE_result/"
 )
 ```
