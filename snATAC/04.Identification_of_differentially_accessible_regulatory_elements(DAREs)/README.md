@@ -11,6 +11,7 @@ This project performs progressive/stage-specific/longevity-associated differenti
     - Individuals (e.g., `Y1,Y2,..,VO6`)
 ## Step 1:
 
+
 # sDAREs
 Use the normalization.method function in Seurat to generate a Peak × Cell CPM (Counts Per Million) matrix for each cell type.
 ```r
