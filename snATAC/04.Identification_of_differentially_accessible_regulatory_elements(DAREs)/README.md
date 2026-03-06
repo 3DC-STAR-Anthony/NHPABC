@@ -15,7 +15,13 @@ Process_subtype_cpm_cor(
 )
 ```
 ## Step 2:
-
+```r
+source("")
+result <- process_coefficient_from_rds(
+  input_rds = "/path/to/your/subtype_matrix.rds",
+  output_dir = "/path/to/output/directory"
+)
+```
 # sDAREs
 Use the normalization.method function in Seurat to generate a Peak × Cell CPM (Counts Per Million) matrix for each cell type.
 ```r
