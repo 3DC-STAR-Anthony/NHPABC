@@ -27,8 +27,8 @@ coef <- process_coefficient(
 source("~/Filter_correlation_with_coefficient.R")
 filter_correlation_with_coefficient(
   subtype_name = "Ast1_PFC",
-  cor_rds_path = cor,
-  coeff_rds_path = coef,
+  cor_results = cor,
+  coeff_results = coef,
   output_dir = "~/output"
 )
 ```
