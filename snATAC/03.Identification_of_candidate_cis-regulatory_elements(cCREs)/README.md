@@ -19,3 +19,10 @@ saveRDS(rds, paste0("Ast1_PFC_peakmatrix_seurat.rds"))
 # Step 2: Further derive a Peak × Individuals mean-CPM matrix, and filter peaks that satisfy
 - Mean CPM > 4 in at least 4 monkey samples;
 - Mean CPM > 0 in at least 12 monkey samples.
+```r
+source("~/calculate_cCRE.R")
+cCRE <- calculate_cCRE(
+  rds_path = "./MyCellType_peakmatrix_seurat.rds",
+  output_dir = "./cCRE_result/"
+)
+```
