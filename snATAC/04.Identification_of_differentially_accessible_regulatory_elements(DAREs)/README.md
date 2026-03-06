@@ -6,7 +6,15 @@ This project performs progressive/stage-specific/longevity-associated differenti
 - The object must contain:
   - mean_CPM matrix (peaks X Individuals)
 ## Step 1: Calculate the corrlation across age
-
+```r
+source("~/Process_subtype_cpm_cor.R")
+Process_subtype_cpm_cor(
+  input_rds = "~/Ast1_PFC_cCRE.rds",
+  output_dir = "~/output",
+  mc_cores = 140
+)
+```
+## Step 2:
 
 # sDAREs
 Use the normalization.method function in Seurat to generate a Peak × Cell CPM (Counts Per Million) matrix for each cell type.
