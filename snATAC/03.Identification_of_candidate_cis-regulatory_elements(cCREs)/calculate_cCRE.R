@@ -1,13 +1,13 @@
 #' Calculate and filter cCRE
 #'
 #' This function takes a Seurat object (peak matrix) for a given cell type,
-#' computes mean CPM values per monkey sample, applies filtering criteria,
+#' computes mean CPM values per monkey individual, applies filtering criteria,
 #' and returns the list of enriched peaks.
 #'
 #' @param rds_path Path to the input Seurat RDS file (peak matrix for one cell type)
-#' @param output_dir Directory to save output CEP RDS files (default: "./03.Cell_type_enrich_peak/")
-#' @param min_samples_cpm2 Minimum number of samples with mean CPM > 2 (default: 2)
-#' @param min_samples_cpm0 Minimum number of samples with mean CPM > 0 (default: 6)
+#' @param output_dir Directory to save output cCRE RDS files
+#' @param min_samples_cpm2 Minimum number of samples with mean CPM > 4 (default: 4)
+#' @param min_samples_cpm0 Minimum number of samples with mean CPM > 0 (default: 12)
 #'
 #' @return A data frame of filtered CEP values, also saved as an RDS file
 #'
@@ -15,8 +15,8 @@
 #' @export
 calculate_cCRE <- function(rds_path,
                           output_dir = "./03.Cell_type_enrich_peak/",
-                          min_samples_cpm2 = 2,
-                          min_samples_cpm0 = 6) {
+                          min_samples_cpm2 = 4,
+                          min_samples_cpm0 = 12) {
 
   # Check if input file exists
   if (!file.exists(rds_path)) {
@@ -41,20 +41,20 @@ calculate_cCRE <- function(rds_path,
   rownames(df) <- df$peaks
   df <- df[, -1, drop = FALSE]
 
-  # Calculate mean CPM for each monkey sample (group)
-  for (sample in unique(meta_data$group)) {
-    # Get cells belonging to this sample
-    sample_cells <- rownames(meta_data[meta_data$group == sample, ])
+  # Calculate mean CPM for each monkey individual
+  for (sample in unique(meta_data$individual)) {
+    # Get cells belonging to this individual
+    sample_cells <- rownames(meta_data[meta_data$individual == sample, ])
     # Subset matrix to these cells
     sample_matrix <- data_matrix[, sample_cells, drop = FALSE]
-    # Compute row means (mean CPM per peak for this sample)
+    # Compute row means (mean CPM per peak for this individual)
     sample_mean_cpm <- rowMeans(sample_matrix)
     # Add to data frame
     df[[sample]] <- sample_mean_cpm
   }
 
   # Save intermediate mean CPM matrix
-  saveRDS(df, file.path(output_dir, paste0(cell_type, "_CEP_row.rds")))
+  saveRDS(df, file.path(output_dir, paste0(cell_type, "_cCRE_row.rds")))
 
   # Apply filtering criteria
   # Condition 1: mean CPM > 2 in at least min_samples_cpm2 samples
@@ -69,7 +69,7 @@ calculate_cCRE <- function(rds_path,
   cep <- df[filtered_peaks, , drop = FALSE]
 
   # Save final CEP result
-  saveRDS(cep, file.path(output_dir, paste0(cell_type, "_CEP.rds")))
+  saveRDS(cep, file.path(output_dir, paste0(cell_type, "_cCRE.rds")))
 
   # Print summary
   message("Cell type: ", cell_type)
