@@ -1,6 +1,3 @@
-# Assign cell types in human data into two major neuron categories (excitatory, inhibitory) 
-# and four glial cell types (microglia, astrocytes, oligodendrocytes, oligodendrocyte precursor cells)
-
 # Load packages
 library(dplyr)
 library(data.table)
