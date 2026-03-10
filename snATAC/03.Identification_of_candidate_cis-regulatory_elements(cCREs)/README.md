@@ -40,7 +40,7 @@ We assessed evolutionary conservation of regulatory elements between monkeys and
 ## Step 1: Processing human brain and monkey snATAC-seq cCRE data
 - See [`Processing_human_brain_and_monkey_snATAC-seq_cCRE_data.R`](https://github.com/3DC-STAR-Anthony/NHPABC/blob/main/snATAC/03.Identification_of_candidate_cis-regulatory_elements(cCREs)/Processing_human_brain_and_monkey_snATAC-seq_cCRE_data.R)
 ## Step 2: liftOver and bedtools
-
+- See [`Conservation_process.sh`](https://github.com/3DC-STAR-Anthony/NHPABC/blob/main/snATAC/03.Identification_of_candidate_cis-regulatory_elements(cCREs)/Conservation_process.sh)
 
 
 
