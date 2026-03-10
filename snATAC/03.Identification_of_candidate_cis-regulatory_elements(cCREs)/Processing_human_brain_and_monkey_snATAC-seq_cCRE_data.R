@@ -1,47 +1,74 @@
-# 将人数据中的细胞类型归成两大类神经元（兴奋性、抑制性）和四种胶质细胞（小胶质细胞，星形胶质细胞，少突胶质细胞和少突胶质前体细胞）
+# Assign cell types in human data into two major neuron categories (excitatory, inhibitory) 
+# and four glial cell types (microglia, astrocytes, oligodendrocytes, oligodendrocyte precursor cells)
 
-#Load package
+# Load packages
 library(dplyr)
 library(data.table)
 
-#######################处理Renbing的人脑数据#########################
-#加载任兵的cCRE data
-ren <- data.frame(fread("~/01.Project/NHPABC/Figure6/06.Conservation/cCREs.bed",nThread = 40))
-head(ren,2)
+####################### Process Ren's human brain data #########################
+# Load Ren's cCRE data
+ren <- data.frame(fread("~/01.Project/NHPABC/Figure6/06.Conservation/cCREs.bed", nThread = 40))
+head(ren, 2)
 
-#归成两大类神经元（兴奋性、抑制性）和四种胶质细胞（小胶质细胞，星形胶质细胞，少突胶质细胞和少突胶质前体细胞）
+# Assign to two major neuron categories and four glial cell types
 ren$celltype <- unlist(lapply(X = ren$V5, FUN = function(x) {return(strsplit(x, split = "_")[[1]][[1]])}))
 
-ren[grepl("ASC",ren$celltype),"celltype"] <- "ASC"
-ren[grepl("D12",ren$celltype),"celltype"] <- "MSN"
-ren[grepl("D1",ren$celltype),"celltype"] <- "MSN"
-ren[grepl("D2",ren$celltype),"celltype"] <- "MSN"
-ren[grepl("COP",ren$celltype),"celltype"] <- "OPC"
+# Standardize cell type names
+ren[grepl("ASC", ren$celltype), "celltype"] <- "ASC"
+ren[grepl("D12", ren$celltype), "celltype"] <- "MSN"
+ren[grepl("D1", ren$celltype), "celltype"] <- "MSN"
+ren[grepl("D2", ren$celltype), "celltype"] <- "MSN"
+ren[grepl("COP", ren$celltype), "celltype"] <- "OPC"
 
-message("合并后，任兵数据的celltype有")
+message("After merging, cell types in Ren's data:")
 print(unique(ren$celltype))
 
-ren$main_celltype <- ifelse(ren$celltype %in% c("ACBGM","ASC"),"Astrocyte",
-                     ifelse(ren$celltype %in% c("MGC"),"Microglia",
-                     ifelse(ren$celltype %in% c("OPC"),"OPC",
-                     ifelse(ren$celltype %in% c("OGC"),"Oligodendrocyte",
-                     ifelse(ren$celltype %in% c("AMY","CBGRC","CT","ERC","ET","ITL23","ITL34","ITL4","ITL45","ITL5","ITL6","ITV1C","L6B","NP","PIR","SUB","TP"),"Ex",
-                     ifelse(ren$celltype %in% c("BFEXA","BNGA","CBINH","CNGA","MSN","FOXP2","LAMP5","PKJ","PVALB","PV","SNCG","SST","THMGA","VIP"),"In",
-                     ifelse(ren$celltype %in% c("EC","SMC"),"VS",
+# Assign to main cell type categories
+ren$main_celltype <- ifelse(ren$celltype %in% c("ACBGM", "ASC"), "Astrocyte",
+                     ifelse(ren$celltype %in% c("MGC"), "Microglia",
+                     ifelse(ren$celltype %in% c("OPC"), "OPC",
+                     ifelse(ren$celltype %in% c("OGC"), "Oligodendrocyte",
+                     ifelse(ren$celltype %in% c("AMY", "CBGRC", "CT", "ERC", "ET", "ITL23", "ITL34", "ITL4", "ITL45", "ITL5", "ITL6", "ITV1C", "L6B", "NP", "PIR", "SUB", "TP"), "Ex",
+                     ifelse(ren$celltype %in% c("BFEXA", "BNGA", "CBINH", "CNGA", "MSN", "FOXP2", "LAMP5", "PKJ", "PVALB", "PV", "SNCG", "SST", "THMGA", "VIP"), "In",
+                     ifelse(ren$celltype %in% c("EC", "SMC"), "VS",
                                                             "Other")))))))
 
-#拆分成各个main_celltype文件, 并利用bedtools将有重复区间的peak进行merge, 具体代码在：~/processing_conservation.sh
-#保存和bedtools处理
+# Split into separate files for each main_celltype, then use bedtools to merge overlapping peaks
+# (specific code in: ~/processing_conservation.sh)
+# Save and process with bedtools
 path <- "~/01.human_maincelltype_cCRE/"
 for(f in unique(ren$main_celltype)){
-    a <- ren[ren$main_celltype == f, c("V1","V2","V3","main_celltype")]
-    fwrite(a, file = paste0(path,f,".renbing_human_brain.bed"), row.names = F, col.names = F, sep = "\t", nThread = 40)
+    a <- ren[ren$main_celltype == f, c("V1", "V2", "V3", "main_celltype")]
+    fwrite(a, file = paste0(path, f, ".renbing_human_brain.bed"), row.names = F, col.names = F, sep = "\t", nThread = 40)
 }
 
-#######################处理NHPABC的数据#########################
-allcCRE <- read.csv("/hwfssz3/PS_JLU/zhangxiao6/Figure6/CPM_filterr4_n4/All_59st_cCRE_list_cpm_4_individual_n_4.csv")
+####################### Process NHPABC data #########################
+allcCRE <- read.csv("~/All_subtype_cCRE.csv")
+allcCRE <- allcCRE %>%
+  mutate(bigcluster = case_when(
+      grepl("Ast", subtype) ~ "Ast",
+      grepl("Mic|Macrophage", subtype) ~ "Mic",
+      grepl("ODC", subtype) ~ "ODC",
+      grepl("OPC|COP", subtype) ~ "OPC",
+      grepl(" Ex", subtype) ~ "Ex",
+      grepl("rhombic lip", subtype) ~ "Ex",
+      grepl("Cerebellar", subtype) ~ "Ex",
+      grepl(" Inh", subtype) ~ "Inh",
+      grepl("SPN", subtype) ~ "Inh",
+      grepl("MLI|PLI|Purkinje", subtype) ~ "Inh",
+      grepl("A10 DAn|CHO|Splatter neuron|A9 DAn", subtype) ~ "Other neuron",
+      grepl("Ependymal", subtype) ~ "Ependymal",
+      grepl("VS", subtype) ~ "VS",
+      TRUE ~ "Unknown"
+  ))
 
+# Filter to keep only relevant cell types
+allcCRE_sub <- allcCRE[allcCRE$bigcluster %in% c('Ast', 'Ex', 'Mic', 'Inh', 'ODC', 'OPC', 'VS'), ]
 
-
-
-
+# Save each subtype to separate bed files
+setwd("~/01.Project/NHPABC/Figure6/06.Conservation/02.NHPABC_cCRE_bed")
+for(f in unique(allcCRE_sub$subtype)){
+    a <- allcCRE_sub[allcCRE_sub$subtype == f, c("seqnames", "start", "end", "peaks", "bigcluster")]
+    bigcluster <- unique(a$bigcluster)
+    fwrite(a[, 1:4], file = paste0(f, ".", bigcluster, ".nhpabc.bed"), row.names = F, col.names = F, sep = "\t", nThread = 40)
+}
