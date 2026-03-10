@@ -30,3 +30,16 @@ cCRE <- calculate_cCRE(
 In brief, co-accessible regions were identified for all cCREs in each cell subtype using addCoAccessibility function in ArchR with the following parameters: aggregation k = 10, window size = 500 kb, distance constraint = 250 kb.
 
 # Identification of conserved cCREs
+We assessed evolutionary conservation of regulatory elements between monkeys and humans:
+- Genomic Conversion: Monkey cCREs were mapped to human genome (hg38) using liftOver
+- Orthology Detection: Successfully converted cCREs considered orthologous
+- Conservation Validation:
+    - Compared against [`human brain snATAC-seq`](https://www.science.org/doi/10.1126/science.adf7044) and [`hippocampus bulk ATAC-seq`](https://www.nature.com/articles/s41586-019-1917-5) data
+    - Used bedtools intersection analysis
+    - Overlapping cCREs defined as cell-type conserved
+## Step 1: Processing human brain and monkey snATAC-seq cCRE data
+
+
+
+
+
