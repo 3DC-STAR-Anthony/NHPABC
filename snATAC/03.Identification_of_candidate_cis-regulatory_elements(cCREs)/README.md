@@ -27,5 +27,6 @@ cCRE <- calculate_cCRE(
 )
 ```
 # Generation of peak-to-gene links
+In brief, co-accessible regions were identified for all cCREs in each cell subtype using addCoAccessibility function in ArchR with the following parameters: aggregation k = 10, window size = 500 kb, distance constraint = 250 kb.
 
 # Identification of conserved cCREs
