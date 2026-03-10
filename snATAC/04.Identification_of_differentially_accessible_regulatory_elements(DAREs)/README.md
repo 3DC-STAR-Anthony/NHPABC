@@ -41,7 +41,15 @@ rds <- NormalizeData(object = rds, normalization.method = "RC", scale.factor = 1
 saveRDS(rds, paste0("Ast1_PFC_peakmatrix_seurat.rds"))
 ```
 # longDAREs
-Identification of longevity-associated DAREs (longDAREs)：We used [`getMarkerFeatures`](https://www.archrproject.com/reference/getMatrixFromProject.html?search-input=getMarkerFeatures) function in ArchR to compare the nuclei in the exceptionally old group with the rest of the nuclei for each cell type. cCREs with a Q < 0.05 and an absolute log2[fold change] > 0.25 were considered as longDAREs.
+Identification of longevity-associated DAREs (longDAREs)：We used [`getMarkerFeatures`](https://www.archrproject.com/reference/getMatrixFromProject.html?search-input=getMarkerFeatures) function in ArchR to compare the nuclei in the exceptionally old group with the rest of the nuclei for each cell type. cCREs with a Pval < 0.0002 and an absolute log2[fold change] > 1.1 were considered as longDAREs.
+## Step 1: Get MarkerFeatures
 ```r
 Rscript Run_getMarkerFeatures.R
 ```
+## Step 2:Filter
+```r
+scMarkers <- readRDS("Ast1_PFC.LongDAREs_raw.rds")
+markerList = getMarkers_new(scMarkers, cutOff = "FDR <= 1")
+markerList_filter <- markerList[markerList$Log2FC > 1.1 & markerList$Pval <= 0.0002, ]
+```
+## Step 3:Add p2g and consvervation information
