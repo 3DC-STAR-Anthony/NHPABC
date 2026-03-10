@@ -9,7 +9,7 @@
 #' @param min_samples_cpm2 Minimum number of samples with mean CPM > 4 (default: 4)
 #' @param min_samples_cpm0 Minimum number of samples with mean CPM > 0 (default: 12)
 #'
-#' @return A data frame of filtered CEP values, also saved as an RDS file
+#' @return A data frame of filtered cCRE values, also saved as an RDS file
 #'
 #' @import Seurat
 #' @export
