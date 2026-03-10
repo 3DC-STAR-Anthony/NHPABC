@@ -43,9 +43,5 @@ saveRDS(rds, paste0("Ast1_PFC_peakmatrix_seurat.rds"))
 # longDAREs
 Identification of longevity-associated DAREs (longDAREs)：We used [`getMarkerFeatures`](https://www.archrproject.com/reference/getMatrixFromProject.html?search-input=getMarkerFeatures) function in ArchR to compare the nuclei in the exceptionally old group with the rest of the nuclei for each cell type. cCREs with a Q < 0.05 and an absolute log2[fold change] > 0.25 were considered as longDAREs.
 ```r
-source("~/calculate_cCRE.R")
-cCRE <- calculate_cCRE(
-  rds_path = "./Ast1_PFC_peakmatrix_seurat.rds",
-  output_dir = "./cCRE_result/"
-)
+Rscript Run_getMarkerFeatures.R
 ```
