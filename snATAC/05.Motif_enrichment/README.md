@@ -6,4 +6,4 @@
 - Background Selection: Generated GC-matched background peaks for each peak using ArchR's getBgdPeak(default settings).
 - Enrichment Calculation: Computed motif enrichment in target peak sets versus background using ArchR's computeEnrichment.
 
-# Step 1: Preparations of Input File
+## Step 1: Preparations of Input File
