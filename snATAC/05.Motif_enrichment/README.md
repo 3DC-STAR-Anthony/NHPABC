@@ -18,3 +18,10 @@ motif_matrix <- create_motif_peak_matrix(
   motif_width = 7
 )
 ```
+```r
+source("")
+IDX <- create_peak_matrix_IDX(
+  seurat_rds = "~/PFC_Astrocyte_PeakMatrix.rds",
+  outpath = "~"
+)
+```
