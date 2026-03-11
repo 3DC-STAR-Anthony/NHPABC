@@ -135,7 +135,7 @@ create_motif_peak_matrix <- function(seurat_rds,
   colnames(motifMat) <- names(motifPositions)
   motifMat <- SummarizedExperiment::SummarizedExperiment(assays=SimpleList(matches = motifMat), rowRanges = rowRanges)
   rownames(motifMat) <- 1:length(peak_names)
-  saveRDS(motif_matrix, output_path)
+  saveRDS(motif_matrix, paste0(output_path,"NHPABC_allpeak_motif_annotation_matrix.rds"))
 
-  return(motif_se)
+  return(motif_matrix)
 }
