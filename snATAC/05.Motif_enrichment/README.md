@@ -43,4 +43,4 @@ up_results <- results$up
 down_results <- results$dow
 ```
 ## Step 3：TF Filtering
-This step was based on the expression results of the TF genes in the corresponding snRNA-seq, which is not elaborated here.
+This step was based on the expression results of the TF genes in the corresponding snRNA-seq, which is not elaborated here. The TF list can be extracted from the Motif Database.
