@@ -7,3 +7,14 @@
 - Enrichment Calculation: Computed motif enrichment in target peak sets versus background using ArchR's computeEnrichment.
 
 ## Step 1: Preparations of Input File
+```r
+source("~/Create_motif_peak_matrix.R")
+motif_matrix <- create_motif_peak_matrix(
+  seurat_rds = "~/PFC_Astrocyte_PeakMatrix.rds",
+  genome_annotation_rds = "~/T2TMF8_genomeAnnotation.rds",
+  species = "Homo sapiens",
+  collection = "CORE",
+  p_cutoff = 5e-05,
+  motif_width = 7
+)
+```
