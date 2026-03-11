@@ -53,3 +53,4 @@ markerList = getMarkers_new(scMarkers, cutOff = "FDR <= 1")
 markerList_filter <- markerList[markerList$Log2FC > 1.1 & markerList$Pval <= 0.0002, ]
 ```
 ## Step 3:Add p2g and consvervation information
+Please match based on the previously generated [`peak-to-gene links`] and the [`monkey cCRE conservation`] file.
