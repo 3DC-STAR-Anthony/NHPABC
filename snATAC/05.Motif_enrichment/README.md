@@ -29,7 +29,7 @@ source("~/Compute_dare_motif_enrichment.R")
 # Load data
 IDX <- IDX
 motifMat <- motif_matrix
-dare <- fread("~/NHPABC_dare_final.csv", data.table = FALSE)
+dare <- fread("~/NHPABC_dare_final.csv", data.table = FALSE) #pDARE, sDARE-Early et al.
 
 # Run enrichment analysis
 results <- compute_dare_motif_enrichment(
