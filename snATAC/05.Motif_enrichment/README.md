@@ -23,3 +23,22 @@ IDX <- create_peak_matrix_IDX(
   outpath = "~"
 )
 ```
+## Step 2:Enrichment Calculation
+```r
+source("~/Compute_dare_motif_enrichment.R")
+# Load data
+IDX <- IDX
+motifMat <- motif_matrix
+dare <- fread("~/NHPABC_dare_final.csv", data.table = FALSE)
+
+# Run enrichment analysis
+results <- compute_dare_motif_enrichment(
+  dare = dare,
+  motifMat = motifMat,
+  IDX = IDX,
+  outpath = "/path/to/output/directory"
+)
+# Access results
+up_results <- results$up
+down_results <- results$dow
+```
