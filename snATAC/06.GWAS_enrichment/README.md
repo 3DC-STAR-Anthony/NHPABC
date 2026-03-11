@@ -6,5 +6,6 @@ GWAS analysis was performed according to the [`standard workflow`](https://githu
 - 01.1000G_EUR_Phase3_plink
 - 02.hapmap3_snps
 - 03.1000G
+- Trait.sumstats.gz file
 
 For specific information, please refer to the document [`LD_Score_Estimation_Tutorial.sh`](https://github.com/3DC-STAR-Anthony/NHPABC/blob/main/snATAC/06.GWAS_enrichment/LD_Score_Estimation_Tutorial.sh).
