@@ -24,7 +24,8 @@ create_motif_peak_matrix <- function(seurat_rds,
                                      p_cutoff = 5e-05,
                                      motif_width = 7,
                                      assay_name = "ATAC",
-                                     slot_name = "data") {
+                                     slot_name = "data",
+                                     outpath = NULL) {
   
   # Log start
   message("Creating motif-peak matrix...")
@@ -135,7 +136,7 @@ create_motif_peak_matrix <- function(seurat_rds,
   colnames(motifMat) <- names(motifPositions)
   motifMat <- SummarizedExperiment::SummarizedExperiment(assays=SimpleList(matches = motifMat), rowRanges = rowRanges)
   rownames(motifMat) <- 1:length(peak_names)
-  saveRDS(motif_matrix, paste0(output_path,"NHPABC_allpeak_motif_annotation_matrix.rds"))
+  saveRDS(motif_matrix, paste0(outpath,"NHPABC_allpeak_motif_annotation_matrix.rds"))
 
   return(motif_matrix)
 }
