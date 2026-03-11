@@ -1,6 +1,6 @@
 # Motif Enrichment Analysis of NHPABC
 
-- Motif Database: JASPAR2022 (JB14.1).
+- Motif Database: [`JASPAR2022`](https://doi.org/10.1093/nar/gkab1113).
 - TF Filtering: Excluded TFs expressed in <5% of cells (based on matched snRNA-seq clusters).
 - Peak Annotation: Annotated peaks with known motifs using ArchR's addMotifAnnotations(default settings).
 - Background Selection: Generated GC-matched background peaks for each peak using ArchR's getBgdPeak(default settings).
