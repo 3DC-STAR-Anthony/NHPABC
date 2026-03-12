@@ -33,7 +33,24 @@ filter_correlation_with_coefficient(
 )
 ```
 # sDAREs
-For specific information, please refer to the document [`XXX`]().
+```r
+source("~/Calculate_sDARE.R")
+drop_celltypes <- c('Hf_Choroid_plexus', 'Tha_Choroid_plexus', 'Tha_TPH1+',
+                   'MB_A9_DAn', 'PM_Choroid_plexus', 'Cer_Choroid_plexus', 'Cer_UBC')
+age_groups <- list(useg = "Middle_age", bgdg = "Old") # change useg and bgdg to match each age stage
+
+results <- find_stage_dares(
+  proj_path = "~/Total_ATAC.rds",
+  drop_celltypes = drop_celltypes,
+  age_groups = age_groups,
+  output_dir = "~/sDARE/",
+  pval_cutoff = 0.05,
+  threads = 60
+)
+```
+
+
+
 
 # longDAREs
 Identification of longevity-associated DAREs (longDAREs)：We used [`getMarkerFeatures`](https://www.archrproject.com/reference/getMatrixFromProject.html?search-input=getMarkerFeatures) function in ArchR to compare the nuclei in the exceptionally old group with the rest of the nuclei for each cell type. cCREs with a Pval < 0.0002 and an absolute log2[fold change] > 1.1 were considered as longDAREs.
