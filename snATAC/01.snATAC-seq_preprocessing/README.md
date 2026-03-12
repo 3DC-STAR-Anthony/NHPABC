@@ -19,10 +19,6 @@
 - Dimensionality Reduction: Iterative Latent Semantic Indexing (LSI) via addIterativeLSI(ArchR)
 - Clustering: Seurat algorithm applied to LSI dimensions (resolution = 0.8)
 
-## Step 4: Cluster Annotation
-- Method: Annotated using marker genes from matched snRNA-seq dataset
-- Integration: Consistent annotation between snATAC-seq and snRNA-seq modalities
-
 # Run processing
 ```r
 #Generate_arrow file
