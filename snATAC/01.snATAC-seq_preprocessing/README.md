@@ -21,7 +21,7 @@
 
 # Run processing
 ```r
-#Generate_arrow file
+#from fragment file to ArchR object
 source("~/Create_archr_project.R")
 input_dir <- "~/ArchR/input/PFC"
 genome_anno <- "~/ref/ArchR_ref/T2TMF8_genomeAnnotation"
