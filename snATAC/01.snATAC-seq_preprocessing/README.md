@@ -13,18 +13,7 @@
 - Doublet Removal:
   - Doublet score calculated with addDoubletScores(ArchR)
   - Filtered with filterDoublets(filterRatio = 2)
-```r
-#Generate_arrow file
-source("~/Create_arrow_files.R")
-arrow_files <- create_arrow_files(
-  input_dir = input_dir,
-  genome_annotation_path = "/path/to/T2TMF8_genomeAnnotation.rds",
-  gene_annotation_path = "/path/to/T2TMF8_geneAnnotation.rds",
-  minTSS = 4,
-  minFrags = 3000,
-  threads = 40
-)
-```
+
 ## Step 3: Dimensionality Reduction & Clustering
 - Feature Creation: 500-bp genomic tiles
 - Dimensionality Reduction: Iterative Latent Semantic Indexing (LSI) via addIterativeLSI(ArchR)
@@ -34,3 +23,21 @@ arrow_files <- create_arrow_files(
 - Method: Annotated using marker genes from matched snRNA-seq dataset
 - Integration: Consistent annotation between snATAC-seq and snRNA-seq modalities
 
+# Run processing
+```r
+#Generate_arrow file
+source("~/Create_archr_project.R")
+input_dir <- "~/ArchR/input/PFC"
+genome_anno <- "~/ref/ArchR_ref/T2TMF8_genomeAnnotation"
+gene_anno <- "~/ref/ArchR_ref/T2TMF8_geneAnnotation"
+output_dir <- "~/ArchR/output/PFC_project"
+proj <- create_archr_project(
+  input_dir = input_dir,
+  genome_annotation_path = genome_anno,
+  gene_annotation_path = gene_anno,
+  output_dir = output_dir,
+  minTSS = 4,
+  minFrags = 3000,
+  threads = 20
+)
+```
