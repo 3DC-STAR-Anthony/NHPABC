@@ -31,7 +31,7 @@ find_stage_dares <- function(proj_path,
   proj <- readRDS(proj_path)
   
   # Get all cell types
-  label3_list <- unique(proj$label3)
+  label3_list <- unique(proj$subtype)
   
   # Filter out excluded cell types
   if (!is.null(drop_celltypes)) {
@@ -60,7 +60,7 @@ find_stage_dares <- function(proj_path,
     message("  Step 1: Subsetting cells...")
     proj_f <- subsetCells(
       ArchRProj = proj,
-      cellNames = row.names(proj@cellColData[proj@cellColData$label3 == f, ])
+      cellNames = row.names(proj@cellColData[proj@cellColData$subtype == f, ])
     )
     
     # Step 2: Find marker features
