@@ -33,13 +33,8 @@ filter_correlation_with_coefficient(
 )
 ```
 # sDAREs
-Use the normalization.method function in Seurat to generate a Peak × Cell CPM (Counts Per Million) matrix for each cell type.
-```r
-pm <- readRDS("Ast1_PFC_PeakMatrix.rds")
-rds <- CreateSeuratObject(counts = pm, assay = "peaks",meta = meta)
-rds <- NormalizeData(object = rds, normalization.method = "RC", scale.factor = 1e6) 
-saveRDS(rds, paste0("Ast1_PFC_peakmatrix_seurat.rds"))
-```
+For specific information, please refer to the document [`XXX`]().
+
 # longDAREs
 Identification of longevity-associated DAREs (longDAREs)：We used [`getMarkerFeatures`](https://www.archrproject.com/reference/getMatrixFromProject.html?search-input=getMarkerFeatures) function in ArchR to compare the nuclei in the exceptionally old group with the rest of the nuclei for each cell type. cCREs with a Pval < 0.0002 and an absolute log2[fold change] > 1.1 were considered as longDAREs.
 ## Step 1: Get MarkerFeatures
