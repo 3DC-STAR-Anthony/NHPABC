@@ -2,7 +2,7 @@
 
 ## TSSEnrichment
 ```r
-source("~/analyze_age_qc_correlation.R")
+source("~/Calculate_epigenetic_erosion_lm.R")
 tss_results <- analyze_age_qc_correlation(
   proj = readRDS('/path/to/project.rds'),
   metric = "TSS",
@@ -11,6 +11,7 @@ tss_results <- analyze_age_qc_correlation(
 ```
 ## FRIP
 ```r
+source("~/Calculate_epigenetic_erosion_lm.R")
 frip_results <- analyze_age_qc_correlation(
   proj = readRDS('/path/to/project.rds'),
   metric = "FRIP",
