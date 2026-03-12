@@ -1,4 +1,4 @@
-# Identification of candidate cis-regulatory elements(cCREs) in NHPABC
+# Identification of differentially accessible regulatory elements(DAREs) in NHPABC
 This project performs progressive/stage-specific/longevity-associated differentially accessible regulatory elements (pDAREs/sDAREs/longDAREs) analysis on single-nuclei ATAC-seq data. 
 # pDAREs
 ## Input
@@ -48,9 +48,6 @@ results <- find_stage_dares(
   threads = 60
 )
 ```
-
-
-
 
 # longDAREs
 Identification of longevity-associated DAREs (longDAREs)：We used [`getMarkerFeatures`](https://www.archrproject.com/reference/getMatrixFromProject.html?search-input=getMarkerFeatures) function in ArchR to compare the nuclei in the exceptionally old group with the rest of the nuclei for each cell type. cCREs with a Pval < 0.0002 and an absolute log2[fold change] > 1.1 were considered as longDAREs.
