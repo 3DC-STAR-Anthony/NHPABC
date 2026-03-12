@@ -1,0 +1,11 @@
+phenotype	sumstats
+Multiple sclerosis	~/Multiple_sclerosis_GCST001198.ldsc.sumstats.gz
+Alzheimer_disease	~/Alzheimer_disease_GCST90012877.ldsc.sumstats.gz
+Cognitive_G4	~/Cognitive_G4.ldsc.sumstats.gz
+Cognitive_G6	~/Cognitive_G6.ldsc.sumstats.gz
+Intelligence	~/Intelligence_GCST90179114.ldsc.sumstats.gz
+Memory_performance	~/Memory_performance_GCST90179116.ldsc.sumstats.gz
+White_matter_integrity	~/White_matter_integrity_GCST010102.ldsc.sumstats.gz
+Opioid_dependence	~/Opioid_dependence_GCST90043725.ldsc.sumstats.gz
+Alcohol_dependence	~/Alcohol_dependence_GCST90043727.ldsc.sumstats.gz
+Stroke	~/Stroke_GCST90104554.ldsc.sumstats.gz
