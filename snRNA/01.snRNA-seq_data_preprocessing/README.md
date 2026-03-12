@@ -4,13 +4,11 @@ Overview: This pipeline processes single-nucleus RNA-seq (snRNA-seq) data from r
 ## Data Processing
 - Alignment: Raw reads were aligned to the T2T-MFA8 (v1.1) reference genome using a custom workflow
 - Read Counting: Both exonic and intronic reads were included to capture nuclear pre-mRNA
+- Doublet Removal: DoubletFinder (v2.0.3) with default settings
+- Ambient RNA Removal: CellBender
 - Quality Control:
   - Retained nuclei with >500 detected genes and >500 UMIs
   - Excluded nuclei with >1% ribosomal gene content
-
-- Doublet Removal: DoubletFinder (v2.0.3) with default settings
-
-- Ambient RNA Removal: CellBender
 
 ## Downstream Analysis
 - Normalization: SCTransform-based method
