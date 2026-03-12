@@ -21,5 +21,16 @@ Overview: This pipeline processes single-nucleus RNA-seq (snRNA-seq) data from r
 
 # Run processing
 ```r
-
+source("~/Process_snrna_data.R")
+result <- process_snrna_data(
+  rds1_path = "~/PFC_old.rds",
+  rds2_path = "~/PFC_new.rds",
+  brain_region = "PFC",
+  output_path = "~/processed_data/",
+  variable_features_n = 3000,
+  npcs = 30,
+  resolution = 0.8,
+  min_pct = 0.1,
+  logfc_threshold = 0.1
+)
 ```
