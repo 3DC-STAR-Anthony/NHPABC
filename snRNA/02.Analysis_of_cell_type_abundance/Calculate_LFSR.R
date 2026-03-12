@@ -11,7 +11,6 @@ library(tidyr)
 data_preprocessing <- function(meta) {
   # Ensure correct data types
   meta$Sample <- as.factor(meta$Sample)
-  meta$Batch <- as.factor(meta$Batch)
   meta$Subtype <- as.factor(meta$Subtype)
   
   # Check for zero or negative Total_cell values
