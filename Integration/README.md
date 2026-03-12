@@ -1,4 +1,4 @@
-# **Integration of snRNA-seq and snATAC-seq data**
+# **Integration of snRNA-seq and snATAC-seq data in NHPABC**
 
 ## Integration of global snRNA-seq and snATAC-seq data
 - For the integration of global snRNA-seq and snATAC-seq datasets, each was randomly downsampled to 300,000 cells.
