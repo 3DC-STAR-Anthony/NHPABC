@@ -3,44 +3,44 @@ library(Seurat)
 library(dplyr)
 library(data.table)
 library(future)
-library(DoubletFinder)  # 确保已安装doubletFinder包
-options(future.globals.maxSize = 50000*1024^2)
-# 设置并行计算
+library(DoubletFinder)  # Ensure DoubletFinder is installed
+options(future.globals.maxSize = 50000 * 1024^2)
+# Set up parallel computing
 plan(multicore, workers = 80)
 
-# 获取当前路径下所有以"_cb_filtered_seurat.h5"结尾的h5文件
+# Find all h5 files ending with "_cb_filtered_seurat.h5" in current directory
 h5_files <- list.files(pattern = "*_cb_filtered_seurat\\.h5$", full.names = TRUE)
 
-# 如果没有找到文件，尝试其他可能的模式
+# If no files found with the specified pattern, try other h5 file patterns
 if (length(h5_files) == 0) {
   h5_files <- list.files(pattern = "*.h5$", full.names = TRUE)
-  cat("未找到以'_cb_filtered_seurat.h5'结尾的文件，但找到以下h5文件：\n")
+  cat("No files ending with '_cb_filtered_seurat.h5' found, but found the following h5 files:\n")
   print(h5_files)
 }
 
 if (length(h5_files) == 0) {
-  stop("当前路径下未找到任何h5文件")
+  stop("No h5 files found in current directory")
 }
 
-cat("找到", length(h5_files), "个h5文件\n")
+cat("Found", length(h5_files), "h5 files\n")
 
-# 创建for循环处理每个文件
+# Process each file in a for loop
 for (h5_file in h5_files) {
-  # 提取样本名：去掉"_cb_filtered_seurat.h5"后缀
+  # Extract sample name: remove "_cb_filtered_seurat.h5" suffix
   sample_name <- gsub("_cb_filtered_seurat\\.h5$", "", basename(h5_file))
   cat("\n===================================\n")
-  cat("开始处理样本:", sample_name, "\n")
-  cat("文件路径:", h5_file, "\n")
+  cat("Processing sample:", sample_name, "\n")
+  cat("File path:", h5_file, "\n")
   cat("===================================\n")
   
   tryCatch({
-    # 1. 读取h5文件
-    cat("正在读取h5文件...\n")
+    # 1. Read h5 file
+    cat("Reading h5 file...\n")
     data <- Read10X_h5(h5_file)
-    cat("读取完成。数据维度:", dim(data)[1], "基因 x", dim(data)[2], "细胞\n")
+    cat("Reading complete. Data dimensions:", dim(data)[1], "genes x", dim(data)[2], "cells\n")
     
-    # 2. 创建Seurat对象
-    cat("创建Seurat对象...\n")
+    # 2. Create Seurat object
+    cat("Creating Seurat object...\n")
     seurat_obj <- CreateSeuratObject(
       counts = data, 
       min.cells = 3, 
@@ -48,45 +48,49 @@ for (h5_file in h5_files) {
       project = sample_name
     )
     
-    # 3. 添加样本信息
+    # 3. Add sample information
     seurat_obj$Sample <- sample_name
     
-    # 4. 质量过滤
-    cat("过滤低质量细胞 (nCount_RNA >= 500 & nFeature_RNA >= 1000)...\n")
+    # 4. Quality filtering
+    cat("Filtering low-quality cells (nCount_RNA >= 500 & nFeature_RNA >= 1000)...\n")
     seurat_obj <- subset(seurat_obj, subset = nCount_RNA >= 500 & nFeature_RNA >= 1000)
-    cat("过滤后细胞数:", ncol(seurat_obj), "\n")
+    cat("Number of cells after filtering:", ncol(seurat_obj), "\n")
     
-    # 5. 标准化
-    cat("标准化数据...\n")
+    # 5. Normalization
+    cat("Normalizing data...\n")
     seurat_obj <- NormalizeData(
       object = seurat_obj, 
       normalization.method = "LogNormalize", 
       scale.factor = 1e4
     )
     
-    # 6. 查找高变基因
-    cat("查找高变基因...\n")
+    # 6. Find variable features
+    cat("Finding variable features...\n")
     seurat_obj <- FindVariableFeatures(object = seurat_obj)
     
-    # 7. 缩放数据
-    cat("缩放数据...\n")
+    # 7. Scale data
+    cat("Scaling data...\n")
     seurat_obj <- ScaleData(
       object = seurat_obj, 
       features = rownames(x = seurat_obj), 
       vars.to.regress = c("nCount_RNA")
     )
     
-    # 8. PCA降维
-    cat("进行PCA降维...\n")
+    # 8. PCA dimensionality reduction
+    cat("Performing PCA dimensionality reduction...\n")
     seurat_obj <- RunPCA(seurat_obj, verbose = FALSE)
     
-    # 9. UMAP降维
-    cat("进行UMAP降维...\n")
+    # 9. UMAP dimensionality reduction
+    cat("Performing UMAP dimensionality reduction...\n")
     seurat_obj <- RunUMAP(seurat_obj, dims = 1:30, verbose = FALSE, reduction = "pca")
     
-
-    # 11. 双细胞检测
-    cat("进行双细胞检测...\n")
+    # 10. Clustering
+    cat("Performing clustering...\n")
+    seurat_obj <- FindNeighbors(seurat_obj, dims = 1:10, verbose = FALSE)
+    seurat_obj <- FindClusters(seurat_obj, resolution = 0.8, verbose = FALSE)
+    
+    # 11. Doublet detection
+    cat("Detecting doublets...\n")
     sweep.res.list <- paramSweep(seurat_obj, PCs = 1:10, sct = FALSE)
     sweep.stats <- summarizeSweep(sweep.res.list, GT = FALSE)
     bcmvn <- find.pK(sweep.stats)
@@ -107,33 +111,33 @@ for (h5_file in h5_files) {
       sct = FALSE
     )
     
-    # 12. 保存双细胞检测结果
+    # 12. Save doublet detection results
     colnames(seurat_obj@meta.data)[length(seurat_obj@meta.data)] <- "DoubleScore"
     doublet <- table(seurat_obj$DoubleScore)  
     table_name <- paste0(sample_name, "_doublet_cell_number.txt")
     write.table(doublet, table_name, quote = FALSE, sep = "\t", row.names = FALSE)
-    cat("双细胞检测结果已保存到:", table_name, "\n")
+    cat("Doublet detection results saved to:", table_name, "\n")
     
-    # 13. 过滤双细胞
+    # 13. Filter out doublets
+    seurat_obj <- subset(seurat_obj, cells = WhichCells(seurat_obj, expression = `DoubleScore` != "Doublet"))
+    cat("Number of cells after removing doublets:", ncol(seurat_obj), "\n")
     
-    seurat_obj <- subset(seurat_obj,cells=WhichCells(seurat_obj,expression=`DoubleScore`!="Doublet"))
-
-    # 14. 保存结果
+    # 14. Save results
     output_file <- paste0(sample_name, "_singlet.rds")
     saveRDS(seurat_obj, output_file)
-    cat("处理完成！结果已保存为:", output_file, "\n")
+    cat("Processing complete! Results saved as:", output_file, "\n")
     
-    # 15. 清理内存
+    # 15. Clean up memory
     rm(data, seurat_obj)
     gc()
     
   }, error = function(e) {
-    cat("处理文件时出错:", h5_file, "\n")
-    cat("错误信息:", e$message, "\n")
-    cat("跳过此文件，继续处理下一个...\n")
+    cat("Error processing file:", h5_file, "\n")
+    cat("Error message:", e$message, "\n")
+    cat("Skipping this file, continuing to next...\n")
   })
 }
 
 cat("\n===================================\n")
-cat("所有文件处理完成！\n")
+cat("All files processed!\n")
 cat("===================================\n")
