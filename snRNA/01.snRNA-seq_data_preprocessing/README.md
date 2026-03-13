@@ -21,6 +21,11 @@ Overview: This pipeline processes single-nucleus RNA-seq (snRNA-seq) data from r
 
 # Run processing
 ```r
+#Batch processing of 10X Genomics format h5 files
+cd ~/h5_file/
+Rscript Doubletfinder_h5.R
+```
+```r
 source("~/Process_snrna_data.R")
 result <- process_snrna_data(
   rds1_path = "~/PFC_old.rds",
