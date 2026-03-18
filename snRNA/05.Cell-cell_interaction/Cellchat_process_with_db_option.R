@@ -32,7 +32,7 @@ process_cellchat <- function(input_cellchat_path, output_path, use_custom_db = T
     cellchat <- identifyOverExpressedGenes_chenge(cellchat,thresh.p = 1)
     cellchat <- identifyOverExpressedInteractions(cellchat)
     cellchat <- computeCommunProb(cellchat, raw.use = TRUE,type = "truncatedMean",trim = 0)#10% trimming 
-    cellchat <- filterCommunication(cellchat, min.cells = 0)#Filter out cell groups with fewer than 100 cells
+    cellchat <- filterCommunication(cellchat, min.cells = 10)#Filter out cell groups with fewer than 100 cells
     cellchat <- computeCommunProbPathway(cellchat)
     cellchat <- aggregateNet(cellchat)
     
