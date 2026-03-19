@@ -8,7 +8,7 @@ df <- calculate_proportions(meta)
 ```
 ## Identify progressive linear alterations
 ```r
-source("~/Calculate_LFSR.R")
+source("~/Calculate_LTSR.R")
 analysis_results <- analyze_age_effects(df)
 write.csv(analysis_results$results, "PFC_All_neuron_age_effects_with_lfsr_p_prop_add_mixed.csv"), row.names = FALSE)
 ```
@@ -30,7 +30,7 @@ results_1 <-  analysis_results$results
 results_1$Region <- unique(df$Region)
 results_1$Stage <- names(copairson_group)[f]
 
-write.csv(results_1, paste0(outdir, unique(df$Region),"_age_effects_with_lfsr_",names(copairson_group)[f],"_s_prop_add_mixed_neuron.csv"), row.names = FALSE)
+write.csv(results_1, paste0(outdir, unique(df$Region),"_age_effects_with_ltsr_",names(copairson_group)[f],"_s_prop_add_mixed_neuron.csv"), row.names = FALSE)
     }
 
 ```
