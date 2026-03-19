@@ -1,5 +1,5 @@
 # **Analysis of epigenetic erosin in NHPABC**
-
+Prior to analysis, cell subtypes were filtered to ensure robust representation.For each cell subtype, individuals with fewer than 10 nuclei were excluded, and only cell subtypes with at least 100 nuclei and more than two individuals per age group were retained.
 ## TSSEnrichment
 ```r
 source("~/Calculate_epigenetic_erosion_lm.R")
