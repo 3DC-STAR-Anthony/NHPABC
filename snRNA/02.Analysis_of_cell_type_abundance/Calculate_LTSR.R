@@ -74,8 +74,8 @@ fit_Subtype_model <- function(ct_data, Subtype_name) {
   return(model)
 }
 
-# 3. LFSR calculation function
-calculate_lfsr <- function(model) {
+# 3. ltsr calculation function
+calculate_ltsr <- function(model) {
   if (is.null(model)) {
     return(NA)
   }
@@ -91,14 +91,14 @@ calculate_lfsr <- function(model) {
     # Calculate two-tailed p-values
     p_values <- 2 * pnorm(-abs(z_values))
     
-    # Calculate LFSR (Local False Sign Rate)
-    # LFSR = 1 - posterior probability (correct sign)
-    # Use two-tailed p-values to calculate LFSR
-    lfsr <- pmin(p_values, 1 - p_values)
+    # Calculate ltsr (Local False Sign Rate)
+    # ltsr = 1 - posterior probability (correct sign)
+    # Use two-tailed p-values to calculate ltsr
+    ltsr <- pmin(p_values, 1 - p_values)
     
-    return(lfsr)
+    return(ltsr)
   }, error = function(e) {
-    cat("LFSR calculation failed:", e$message, "\n")
+    cat("ltsr calculation failed:", e$message, "\n")
     return(NA)
   })
 }
@@ -112,7 +112,7 @@ analyze_age_effects <- function(meta) {
   # Store results
   results <- data.frame()
   models_list <- list()
-  lfsr_list <- list()
+  ltsr_list <- list()
   
   # Analyze each cell type
   for(ct in Subtypes) {
@@ -129,9 +129,9 @@ analyze_age_effects <- function(meta) {
         summ <- summary(model)
         coef_table <- summ$coefficients
         
-        # Calculate LFSR
-        lfsr_values <- calculate_lfsr(model)
-        lfsr_list[[ct]] <- lfsr_values
+        # Calculate ltsr
+        ltsr_values <- calculate_ltsr(model)
+        ltsr_list[[ct]] <- ltsr_values
         
         # Extract Age effect results
         if("Age" %in% rownames(coef_table)) {
@@ -143,7 +143,7 @@ analyze_age_effects <- function(meta) {
             StdError = age_coef["Std. Error"],
             Zvalue = age_coef["z value"],
             Pvalue = age_coef["Pr(>|z|)"],
-            LFSR = ifelse("Age" %in% names(lfsr_values), lfsr_values["Age"], NA),
+            ltsr = ifelse("Age" %in% names(ltsr_values), ltsr_values["Age"], NA),
             N_samples = nrow(ct_data),
             Model_type = "glmer",
             stringsAsFactors = FALSE
@@ -162,10 +162,10 @@ analyze_age_effects <- function(meta) {
   if(nrow(results) > 0) {
     results$Padj <- p.adjust(results$Pvalue, method = "fdr")
     results$Significant <- results$Padj < 0.05
-    results$LFSR_significant <- ifelse(!is.na(results$LFSR), results$LFSR < 0.05, FALSE)
+    results$ltsr_significant <- ifelse(!is.na(results$ltsr), results$ltsr < 0.05, FALSE)
   } else {
     cat("Warning: No cell types were successfully analyzed\n")
   }
   
-  return(list(results = results, models = models_list, lfsr = lfsr_list))
+  return(list(results = results, models = models_list, ltsr = ltsr_list))
 }
