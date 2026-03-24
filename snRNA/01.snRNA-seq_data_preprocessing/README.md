@@ -1,4 +1,4 @@
-# **snATAC-seq Data Processing Pipeline**
+# **snRNA-seq Data Processing Pipeline**
 Overview: This pipeline processes single-nucleus RNA-seq (snRNA-seq) data from raw sequencing reads to annotated cell clusters, with quality control.
 
 ## Step 1: Data Processing
