@@ -60,6 +60,3 @@ Scripts are organized by **visualization type**. Each script generates one type 
 
 Processed data are available through the [NHPABC portal](https://db.cngb.org/stomics/nhpabc/). See the paper's **Data Availability** section for details.
 
-## Citation
-
-> Xiao Zhang, Guangyao Lai, Xiangyu Guo, et al. *Multimodal brain cell atlas across the adult macaque lifespan*. **Cell**, 2025.
