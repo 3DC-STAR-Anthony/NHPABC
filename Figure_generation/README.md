@@ -21,9 +21,8 @@ Scripts are organized by **visualization type**. Each script generates one type 
 
 | # | Script | Type | Covers |
 |---|--------|------|--------|
-| 1 | `plot_schematic.R` | schematic | Fig1A |
-| 2 | `plot_umap.R` | UMAP embedding | Fig1B-C, Fig2A, Fig7A |
-| 3 | `plot_scatter.R` | scatter plot | Fig1D |
+| 2 | `plot_umap.R` | UMAP embedding | Fig1B, Fig2A, Fig2C, Fig2E, Fig7C |
+| 3 | `plot_scatter.R` | scatter plot | Fig1C |
 | 4 | `plot_barplot.R` | bar plot | Fig1E-F, Fig2G-H, Fig3A,C, Fig5B,H, Fig6A, Fig7E |
 | 5 | `plot_heatmap.R` | heatmap | Fig1G-H, Fig2M, Fig3F, Fig4A,C,E, Fig5C,G, Fig6D, Fig7B,D |
 | 6 | `plot_dotplot.R` | dot plot | Fig2B, Fig3D-E,G-H, Fig4B,D,F, Fig5D,I, Fig6B, Fig7C |
