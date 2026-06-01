@@ -229,3 +229,131 @@ ggsave(
   egg::set_panel_size(p_dare_trend_box, width = unit(38, "mm"), height = unit(16, "mm")),
   height = 4, width = 15, limitsize = FALSE
 )
+
+###################################################################----LR Ligand & Receptor Enrichment Score Boxplot----###################################################################
+# Read input CellChat LR table
+charlr <- fread("./NHPABC_CellChat_truncatedMean_final_ARLR.csv")
+
+# Step1: Get all unique cell subtypes from source & target labels
+lc_col_an <- data.frame(celltype = unique(c(charlr$source_label, charl r$target_label)))
+rownames(lc_col_an) <- lc_col_an$celltype
+
+# Step2: Build ligand count matrix (source cell type count per pathway)
+lg_mat <- matrix(0, nrow = length(unique(charlr$pathway_name)), ncol = nrow(lc_col_an))
+colnames(lg_mat) <- rownames(lc_col_an)
+rownames(lg_mat) <- unique(charlr$pathway_name)
+for(f in rownames(lg_mat)){
+  df_sub <- charl r[charlr$pathway_name == f, ]
+  for(i in colnames(lg_mat)){
+    cnt <- nrow(df_sub[df_sub$source_label == i, ])
+    lg_mat[f, i] <- cnt
+  }
+}
+# Convert raw count to proportion matrix (row sum = 1)
+lg_mat_per_subtype <- lg_mat
+for(i in colnames(lg_mat_per_subtype)){
+  lg_mat_per_subtype[,i] <- lg_mat_per_subtype[,i] / rowSums(lg_mat)
+}
+
+# Step3: Build receptor count matrix (target cell type count per pathway)
+rp_mat <- matrix(0, nrow = length(unique(charlr$pathway_name)), ncol = nrow(lc_col_an))
+colnames(rp_mat) <- rownames(lc_col_an)
+rownames(rp_mat) <- unique(charlr$pathway_name)
+for(f in rownames(rp_mat)){
+  df_sub <- charl r[charlr$pathway_name == f, ]
+  for(i in colnames(rp_mat)){
+    cnt <- nrow(df_sub[df_sub$target_label == i, ])
+    rp_mat[f, i] <- cnt
+  }
+}
+# Convert raw count to proportion matrix
+rp_mat_per_subtype <- rp_mat
+for(i in colnames(rp_mat_per_subtype)){
+  rp_mat_per_subtype[,i] <- rp_mat_per_subtype[,i] / rowSums(rp_mat)
+}
+
+# Step4: Reshape matrix to long data frame for plotting
+# Ligand table
+dfl <- as.data.frame(t(lg_mat_per_subtype[unique(charlr$pathway_name), ]))
+dfl$subtype <- rownames(dfl)
+dfl <- gather(dfl, key = pathway, value = ligand, -subtype)
+# Receptor table
+dfr <- as.data.frame(t(rp_mat_per_subtype[unique(charlr$pathway_name), ]))
+dfr$subtype <- rownames(dfr)
+dfr <- gather(dfr, key = pathway, value = receptor, -subtype)
+# Merge ligand & receptor values
+dfmerge <- dfl
+dfmerge$receptor <- dfr$receptor
+
+# Step5: Reusable boxplot drawing function
+single_barplot <- function(f, dt, savepath, width = 18, height = 15){
+  df_sub <- dt[dt$pathway == f, ]
+  df_sub$bigcluster <- factor(df_sub$bigcluster, levels = c('Ex','Inh','Other neuron','Ast','Mic','ODC','OPC','VS','Ependymal'))
+  max_lim <- max(c(df_sub$ligand, df_sub$receptor)) + 0.01
+  
+  # Ligand enrichment boxplot
+  p_lig <- ggplot(df_sub, aes(x = bigcluster, y = ligand, fill = bigcluster)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(aes(color = region), size = 0.05, width = 0.25) +
+    scale_fill_manual(values = ano_col$Bigcluster, name = "Cell type") +
+    scale_color_manual(values = ano_col$Region, name = "Region") +
+    theme_bw() +
+    xlab("") +
+    ylab("Ligand enrichment score") +
+    ggtitle(paste0(f, " LR pathway enrichment")) +
+    scale_y_continuous(expand = c(0,0), limits = c(0, max_lim)) +
+    theme(
+      axis.text.x = element_blank(),
+      axis.text.y = element_text(size = 6, family = "sans", color = "black"),
+      axis.title.x = element_blank(),
+      axis.title.y = element_text(size = 6, family = "sans", color = "black"),
+      legend.text = element_text(size = 6, family = "sans", color = "black"),
+      legend.title = element_text(size = 6, family = "sans", color = "black"),
+      legend.position = "right",
+      legend.box = "horizontal",
+      legend.spacing.x = unit(0.5, "cm"),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.title = element_text(size = 8, hjust = 0.5, family = "sans", color = "black")
+    )
+  ggsave(paste0(savepath, f, "_L_enrich_boxplot.pdf"),
+         egg::set_panel_size(p_lig, width = unit(width, "mm"), height = unit(height, "mm")),
+         height = 5, width = 5, limitsize = FALSE)
+  
+  # Receptor enrichment boxplot
+  p_rec <- ggplot(df_sub, aes(x = bigcluster, y = receptor, fill = bigcluster)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(aes(color = region), size = 0.05, width = 0.25) +
+    scale_fill_manual(values = ano_col$Bigcluster, name = "Cell type") +
+    scale_color_manual(values = ano_col$Region, name = "Region") +
+    theme_bw() +
+    xlab("") +
+    ylab("Receptor enrichment score") +
+    ggtitle(paste0(f, " receptor pathway enrichment")) +
+    scale_y_continuous(expand = c(0,0), limits = c(0, max_lim)) +
+    theme(
+      axis.text.x = element_text(size = 6, angle = 90, hjust = 1, vjust = 0.5, family = "sans", color = "black"),
+      axis.text.y = element_text(size = 6, family = "sans", color = "black"),
+      axis.title.x = element_text(size = 6, family = "sans", color = "black"),
+      axis.title.y = element_text(size = 6, family = "sans", color = "black"),
+      legend.text = element_text(size = 6, family = "sans", color = "black"),
+      legend.title = element_text(size = 6, family = "sans", color = "black"),
+      legend.position = "right",
+      legend.box = "horizontal",
+      legend.spacing.x = unit(0.5, "cm"),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.title = element_blank()
+    )
+  ggsave(paste0(savepath, f, "_R_enrich_boxplot.pdf"),
+         egg::set_panel_size(p_rec, width = unit(width, "mm"), height = unit(height, "mm")),
+         height = 5, width = 5, limitsize = FALSE)
+}
+
+# Define output path & target pathway list
+savepath <- "./Figure5/Single_LR_enrich_box/"
+target_pathways <- c("EPHA", "NRXN", "EGF", "TGFB", "PDGF")
+# Loop to generate boxplot for each pathway
+for(pathway_name in target_pathways){
+  single_barplot(f = pathway_name, dt = dfmerge, savepath = savepath, width = 18, height = 15)
+}
