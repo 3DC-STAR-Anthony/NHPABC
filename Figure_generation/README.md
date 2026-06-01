@@ -51,8 +51,7 @@ Scripts are organized by **visualization type**. Each script generates one type 
 | 10 | `plot_volcanoplot.R` | Volcano | FigS2E, FigS6A |
 | 11 | `plot_vennplot.R` | venn | FigS3K, FigS3H, FigS6E |
 | 12 | `plot_composite.R` | multi-panel | FigS6F |
-| 13 | `plot_pieplot.R` | pie plot | FigS6H |
-| 14 | `plot_genome_track.R` | genome track | FigS6N, FigS7B |
+| 13 | `plot_genome_track.R` | genome track | FigS6N, FigS7B |
 
 ## Dependencies
 
