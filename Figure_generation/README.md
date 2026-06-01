@@ -21,34 +21,39 @@ Scripts are organized by **visualization type**. Each script generates one type 
 
 | # | Script | Type | Covers |
 |---|--------|------|--------|
-| 2 | `plot_umap.R` | UMAP embedding | Fig1B, Fig2A, Fig2C, Fig2E, Fig7C |
-| 3 | `plot_scatter.R` | scatter plot | Fig1C |
-| 4 | `plot_barplot.R` | bar plot | Fig1E-F, Fig2G-H, Fig3A,C, Fig5B,H, Fig6A, Fig7E |
-| 5 | `plot_heatmap.R` | heatmap | Fig1G-H, Fig2M, Fig3F, Fig4A,C,E, Fig5C,G, Fig6D, Fig7B,D |
-| 6 | `plot_dotplot.R` | dot plot | Fig2B, Fig3D-E,G-H, Fig4B,D,F, Fig5D,I, Fig6B, Fig7C |
-| 7 | `plot_composite.R` | multi-panel | Fig2C-F, Fig4G,L-M, Fig6F |
-| 8 | `plot_lineplot.R` | line/trend | Fig2I-L, Fig3I-J, Fig4H-K, Fig5E,J, Fig6E |
-| 9 | `plot_boxplot.R` | box plot | Fig2N |
-| 10 | `plot_histogram.R` | histogram | Fig3B |
-| 11 | `plot_network.R` | network | Fig5A,F |
-| 12 | `plot_genome_track.R` | genome track | Fig6C |
+| 1 | `plot_umap.R` | UMAP embedding | Fig1B, Fig2A left, Fig2C left, Fig2E left, Fig7C |
+| 2 | `plot_scatter.R` | scatter plot | Fig1C, Fig3C, Fig4A, Fig5A, Fig6A |
+| 3 | `plot_barplot.R` | bar plot | Fig2A, Fig2C, Fig2E, Fig3C-D, Fig3G-H, Fig4A, Fig5B, Fig6A, Fig7B |
+| 4 | `plot_heatmap.R` | heatmap | Fig1D, Fig3F, Fig4B-C, Fig4E-F, Fig4G, Fig4I-J, Fig4L-M, Fig6D, Fig7A, Fig7D-E |
+| 5 | `plot_dotplot.R` | dot plot | Fig2B, Fig2D, Fig2F-G, Fig5D, Fig5F, Fig5H, Fig5J |
+| 6 | `plot_line&dotplot.R` | line/trend | Fig3E, Fig3I, Fig4D, Fig4H, Fig4K, Fig4N, Fig5E, Fig5G, Fig5I, Fig5K |
+| 7 | `plot_vlnplot.R` | violinplot | Fig3J, Fig4D, Fig4H, Fig4K, Fig4H, Fig5E, Fig5G, Fig5I, Fig5K |
+| 8 | `plot_boxplot.R` | box plot | Fig3E, Fig5C |
+| 9 | `plot_histogram.R` | histogram | Fig3B |
+| 10 | `plot_volcanoplot.R` | volcano | Fig2I, Fig2K |
+| 11 | `plot_footprinting.R` | footprinting | Fig6E |
+| 12 | `plot_genome_track.R` | genome track | Fig6B, Fig6C |
+
 
 ### Supplemental Figures
 
 | # | Script | Type | Covers |
 |---|--------|------|--------|
-| 1 | `plot_violin.R` | violin plot | FigS1A, FigS6L |
-| 2 | `plot_barplot.R` | bar plot | FigS1B, FigS2C, FigS3A,C,D,G,K, FigS5C, FigS6B,K, FigS7E,G |
-| 3 | `plot_umap.R` | UMAP embedding | FigS1C-D, FigS2A-B, FigS7A |
-| 4 | `plot_boxplot.R` | box plot | FigS2D-E |
-| 5 | `plot_histogram.R` | histogram | FigS3B |
-| 6 | `plot_dotplot.R` | dot plot | FigS3E-F,L-N, FigS4B,D,F,H, FigS5D, FigS6I, FigS7F |
-| 7 | `plot_heatmap.R` | heatmap | FigS3H-J, FigS4A,C,E,G,K-L, FigS5B, FigS6E,G, FigS7B |
-| 8 | `plot_lineplot.R` | line/trend | FigS3I,M,O-P, FigS5E, FigS6D,F, FigS7D |
-| 9 | `plot_composite.R` | multi-panel | FigS4I-J, FigS6J |
-| 10 | `plot_network.R` | network | FigS5A,F |
-| 11 | `plot_genome_track.R` | genome track | FigS6A,H |
-| 12 | `plot_scatter.R` | scatter plot | FigS6C, FigS7C |
+
+| 1 | `plot_umap.R` | UMAP embedding | FigS2A-C |
+| 2 | `plot_scatter.R` | scatter plot | FigS7A |
+| 3 | `plot_barplot.R` | bar plot | FigS2B, FigS2C, FigS3F, FigS3L, FigS3N, FigS5B, FigS6D, FigS6K, FigS6M, FigS7C, FigS7E |
+| 4 | `plot_heatmap.R` | heatmap | FigS3I, FigS4F, FigS4I-N, FigS5C, FigS6C, FigS6G, FigS6O |
+| 5 | `plot_dotplot.R` | dot plot | FigS1C |
+| 6 | `plot_line&dotplot.R` | line/trend | FigS3M, FigS3O-P, FigS4G-H, FigS6B |
+| 7 | `plot_vlnplot.R` | violinplot | FigS3M, FigS3O-P, FigS4G-H |
+| 8 | `plot_boxplot.R` | box plot | FigS1A, FigS1B, FigS2D, FigS2E, FigS3A-D, FigS3J, FigS4A-D, FigS5A, FigS6I-J, FigS6L, FigS7D |
+| 9 | `plot_histogram.R` | histogram | FigS3G, FigS4E |
+| 10 | `plot_volcanoplot.R` | Volcano | FigS2E, FigS6A |
+| 11 | `plot_vennplot.R` | venn | FigS3K, FigS3H, FigS6E |
+| 12 | `plot_composite.R` | multi-panel | FigS6F |
+| 13 | `plot_pieplot.R` | pie plot | FigS6H |
+| 14 | `plot_genome_track.R` | genome track | FigS6N, FigS7B |
 
 ## Dependencies
 
