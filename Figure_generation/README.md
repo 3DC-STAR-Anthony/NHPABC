@@ -57,7 +57,7 @@ Scripts are organized by **visualization type**. Each script generates one type 
 ## Dependencies
 
 - R >= 4.0
-- Key packages: `Seurat`, `Signac`, `ggplot2`, `ComplexHeatmap`, `dplyr`, `GenomicRanges`
+- Key packages: `Seurat`, `Signac`, `ggplot2`, `pheatmap`, `dplyr`, et al.
 
 ## Data
 
