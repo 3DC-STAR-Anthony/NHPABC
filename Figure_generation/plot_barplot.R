@@ -203,3 +203,43 @@ ggsave(
   egg::set_panel_size(p_lift_bar, width = unit(10, "mm"), height = unit(26, "mm")),
   height = 10, width = 10, limitsize = FALSE
 )
+
+###################################################################----Individual Count Stacked Barplot (Age & Sex Distribution)----###################################################################
+# Load input metadata table
+df_ref <- read.csv("./individual_age_sex_count.csv", stringsAsFactors = FALSE)
+# Convert age variable to numeric
+df_ref$Var2 <- as.numeric(as.character(df_ref$Var2))
+
+# Sex color palette
+sex_color <- c(male = '#6c4fc8', female = '#da5b8e')
+
+# Plot stacked barplot for individual counts grouped by age & sex
+p_individual_bar <- ggplot(df_ref, aes(x = Var2, fill = Var1)) +
+  geom_bar(position = "stack") +
+  labs(
+    x = "Age",
+    y = "Count of Individuals",
+    title = "Number of Individuals by Age and Sex",
+    fill = "Sex"
+  ) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, family = "sans", color = "black", size = 6),
+    axis.text.y = element_text(family = "sans", color = "black", size = 6),
+    axis.title.x = element_text(family = "sans", color = "black", size = 12, face = "bold"),
+    axis.title.y = element_text(family = "sans", color = "black", size = 12, face = "bold"),
+    plot.title = element_text(family = "sans", color = "black", size = 10, face = "bold", hjust = 0.5),
+    legend.title = element_text(family = "sans", color = "black", size = 9, face = "bold"),
+    legend.text = element_text(family = "sans", color = "black", size = 8),
+    legend.position = "right"
+  ) +
+  scale_fill_manual(values = sex_color) +
+  xlim(4, 35) +
+  ylim(0, 4)
+
+# Export PDF figure
+ggsave(
+  "Age_distribution.pdf",
+  egg::set_panel_size(p_individual_bar, width = unit(25, "mm"), height = unit(20, "mm")),
+  height = 8, width = 10, limitsize = FALSE
+)
