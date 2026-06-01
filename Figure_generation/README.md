@@ -39,7 +39,6 @@ Scripts are organized by **visualization type**. Each script generates one type 
 
 | # | Script | Type | Covers |
 |---|--------|------|--------|
-
 | 1 | `plot_umap.R` | UMAP embedding | FigS2A-C |
 | 2 | `plot_scatter.R` | scatter plot | FigS7A |
 | 3 | `plot_barplot.R` | bar plot | FigS2B, FigS2C, FigS3F, FigS3L, FigS3N, FigS5B, FigS6D, FigS6K, FigS6M, FigS7C, FigS7E |
