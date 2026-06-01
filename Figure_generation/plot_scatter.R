@@ -47,7 +47,7 @@ p_rna <- ggplot(df_stat_rna, aes(x=Var1, y=Region)) +
     axis.ticks.x=element_line(linewidth=0.25), axis.ticks.y=element_line(linewidth=0.25),
     legend.position="none"
   )
-ggsave('Global_scRNA_subtype_distribution_no_legend.pdf', egg::set_panel_size(p_rna, width=unit(80,"mm"), height=unit(20,"mm")), height=10, width=10, limitsize=FALSE)
+ggsave('XXXX_subtype_distribution_no_legend.pdf', egg::set_panel_size(p_rna, width=unit(80,"mm"), height=unit(20,"mm")), height=10, width=10, limitsize=FALSE)
 
 ###################################################################----Other Plot----###################################################################
 
@@ -82,4 +82,4 @@ plot1 <- ggplot(sdare_df, aes(x=Var1, y=Freq, group=stage, color=stage)) +
     panel.grid.major=element_blank(),
     panel.grid.minor=element_blank()
   )
-ggsave("NHPABC_sDAREs_subtype_number_dotplot.pdf", egg::set_panel_size(plot1, width=unit(166,"mm"), height=unit(15,"mm")), height=4, width=15, limitsize=FALSE)
+ggsave("XXXX_number_dotplot.pdf", egg::set_panel_size(plot1, width=unit(166,"mm"), height=unit(15,"mm")), height=4, width=15, limitsize=FALSE)
