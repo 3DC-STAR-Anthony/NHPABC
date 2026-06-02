@@ -161,8 +161,8 @@ analyze_age_effects <- function(meta) {
   # Multiple testing correction (only if results are not empty)
   if(nrow(results) > 0) {
     results$Padj <- p.adjust(results$Pvalue, method = "fdr")
-    results$Significant <- results$Padj < 0.05
-    results$ltsr_significant <- ifelse(!is.na(results$ltsr), results$ltsr < 0.05, FALSE)
+    #results$Significant <- results$Padj < 0.05
+    results$ltsr_significant <- ifelse(!is.na(results$ltsr), results$ltsr < 0.01, FALSE)
   } else {
     cat("Warning: No cell types were successfully analyzed\n")
   }
