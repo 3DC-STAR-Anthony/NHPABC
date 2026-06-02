@@ -25,8 +25,13 @@ Overview: This pipeline processes single-nucleus RNA-seq (snRNA-seq) data from r
 ```r
 #Batch processing of 10X Genomics format h5 files
 cd ~/h5_file/
-Rscript Doubletfinder_h5.R
+python batch_run_cellbender.py
 ```
+```r
+Rscript Doubletfinder_h5.R
+Rscript Ambient_Tag_v2.R
+```
+
 ```r
 source("~/Process_snrna_data.R")
 result <- process_snrna_data(
