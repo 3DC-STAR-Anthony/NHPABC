@@ -1,5 +1,7 @@
 # Identification of candidate cis-regulatory elements(cCREs) in NHPABC
 This project performs cCRE analysis on single-nuclei ATAC-seq data. Cell types containing more than 10 nuclei per individual animal and over 100 nuclei per age group were selected for analysis. cCREs was performed through the following steps:
+## Peak calling
+Peaks were identified on a cell-subtype basis in each individual using ArchR's addReproduciblePeakSet with MACS2 (v2.2.7.1), with addGroupCoverages run at minCells = 40, maxCells = 5,000, minReplicates = 2, maxReplicates = 10, and addReproduciblePeakSet at maxPeaks = 500,000, cutOff = 0.01, generating 501-bp fixed-width peaks. 
 ## Input
 - An ArchR PeakMatrix object in `.rds` format named: `<Subtype>.rds` (e.g., `Ast1_PFC_PeakMatrix.rds`)
 - Use the function of ArchR [`getMatrixFromProject`](https://www.archrproject.com/reference/getMatrixFromProject.html)
