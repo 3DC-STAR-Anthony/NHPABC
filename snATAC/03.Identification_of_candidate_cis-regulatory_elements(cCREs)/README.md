@@ -9,7 +9,7 @@ Peaks were identified on a cell-subtype basis in each individual using ArchR's a
   - peakmatrix (peaks X Individuals)
   - Metadata columns including:
     - Annotion (e.g., `Subtype`)
-    - Individuals (e.g., `Y1,Y2,..,VO6`)
+    - Individuals (e.g., `Y1,Y2,..,V6`)
 ## Step 1: Convert the peak matrix of each cell type into a Seurat object
 Use the normalization.method function in Seurat to generate a Peak × Cell CPM (Counts Per Million) matrix for each cell type.
 ```r
